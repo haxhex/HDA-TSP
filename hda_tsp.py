@@ -1,12 +1,23 @@
 import random
 import numpy as np
 
-# Generate the distance matrix for TSP problem
-def generate_distance_matrix(num_cities):
+import matplotlib.pyplot as plt
+
+# Generate coordinates for each city
+def generate_city_coordinates(num_cities):
+    coordinates = []
+    for _ in range(num_cities):
+        x, y = random.uniform(0, 100), random.uniform(0, 100)
+        coordinates.append((x, y))
+    return coordinates
+
+# Generate the distance matrix for TSP problem using coordinates
+def generate_distance_matrix(coordinates):
+    num_cities = len(coordinates)
     distance_matrix = np.zeros((num_cities, num_cities))
     for i in range(num_cities):
         for j in range(i + 1, num_cities):
-            distance = random.uniform(0.1, 100.0)  # Generate random distances
+            distance = np.sqrt((coordinates[i][0] - coordinates[j][0]) ** 2 + (coordinates[i][1] - coordinates[j][1]) ** 2)
             distance_matrix[i][j] = distance
             distance_matrix[j][i] = distance
     return distance_matrix
@@ -54,10 +65,13 @@ def dragonfly_movement(tour, best_tour, distance_matrix):
         return new_tour  # Accept the new tour if its cost is lower
     return tour  # Otherwise, return the original tour
 
-# Main hybrid Dragonfly algorithm
+# Perform dragonfly movements
 def hybrid_dragonfly_algorithm(num_dragonflies, num_cities, num_iterations):
+    # Generate the city coordinates
+    coordinates = generate_city_coordinates(num_cities)
+
     # Generate the distance matrix
-    distance_matrix = generate_distance_matrix(num_cities)
+    distance_matrix = generate_distance_matrix(coordinates)
 
     # Initialize the dragonflies population
     population = []
@@ -88,11 +102,32 @@ def hybrid_dragonfly_algorithm(num_dragonflies, num_cities, num_iterations):
 
     return best_tour, best_cost
 
+def plot_tour(coordinates, best_tour):
+    x = [coordinates[i][0] for i in best_tour] + [coordinates[best_tour[0]][0]]
+    y = [coordinates[i][1] for i in best_tour] + [coordinates[best_tour[0]][1]]
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, y, '-o', color='blue', linewidth=1, markersize=5)
+    plt.ylabel('Y-Coordinates')
+    plt.xlabel('X-Coordinates')
+    plt.title('Best TSP Tour')
+    plt.grid()
+    plt.show()
+
 # Example usage
 num_cities = 10
 
-num_iterations = 1000   
-best_tour, best_cost = hybrid_dragonfly_algorithm(50, num_cities, num_iterations)
+# Generate city coordinates
+coordinates = generate_city_coordinates(num_cities)
+
+# Generate distance matrix using coordinates
+distance_matrix = generate_distance_matrix(coordinates)
+
+num_iterations = 1000
+best_tour, best_cost = hybrid_dragonfly_algorithm(100, num_cities, num_iterations)
 
 print("Best tour:", best_tour)
 print("Cost:", best_cost)
+
+# Plot the best tour
+# plot_tour(coordinates, best_tour)
