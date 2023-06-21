@@ -114,7 +114,7 @@ def plot_tour(coordinates, best_tour):
     plt.grid()
     plt.show()
 
-# Example usage
+# Example 
 num_cities = 10
 
 # Generate city coordinates
