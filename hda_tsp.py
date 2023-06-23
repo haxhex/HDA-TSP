@@ -115,19 +115,19 @@ def plot_tour(coordinates, best_tour):
     plt.show()
 
 # Example 
-num_cities = 10
+# num_cities = 10
 
-# Generate city coordinates
-coordinates = generate_city_coordinates(num_cities)
+# # Generate city coordinates
+# coordinates = generate_city_coordinates(num_cities)
 
-# Generate distance matrix using coordinates
-distance_matrix = generate_distance_matrix(coordinates)
+# # Generate distance matrix using coordinates
+# distance_matrix = generate_distance_matrix(coordinates)
 
-num_iterations = 1000
-best_tour, best_cost = hybrid_dragonfly_algorithm(100, num_cities, num_iterations)
+# num_iterations = 1000
+# best_tour, best_cost = hybrid_dragonfly_algorithm(100, num_cities, num_iterations)
 
-print("Best tour:", best_tour)
-print("Cost:", best_cost)
+# print("Best tour:", best_tour)
+# print("Cost:", best_cost)
 
 # Plot the best tour
 # plot_tour(coordinates, best_tour)
